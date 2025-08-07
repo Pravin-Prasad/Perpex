@@ -1,26 +1,37 @@
-Test Event Name
-hello-world
+Resources:
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: my-lambda-execution-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: allow-ssm-parameter-read
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssm:GetParametersByPath
+                  - ssm:GetParameters
+                  - ssm:GetParameter
+                Resource: arn:aws:ssm:ap-south-1:YOUR_ACCOUNT_ID:parameter/certificate/*
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
 
-Response
-{
-  "errorMessage": "Unable to import module 'lambda_function': No module named 'cryptography'",
-  "errorType": "Runtime.ImportModuleError",
-  "requestId": "",
-  "stackTrace": []
-}
+# (Optional) Example Lambda definition using this role:
+  MyLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Role: !GetAtt LambdaExecutionRole.Arn
+      # ... (other Lambda function properties, such as Code, Handler, Runtime, etc.) ...
 
-Function Logs
-[WARNING]	2025-08-07T16:33:58.005Z		LAMBDA_WARNING: Unhandled exception. The most likely cause is an issue in the function code. However, in rare cases, a Lambda runtime update can cause unexpected function behavior. For functions using managed runtimes, runtime updates can be triggered by a function change, or can be applied automatically. To determine if the runtime has been updated, check the runtime version in the INIT_START log entry. If this error correlates with a change in the runtime version, you may be able to mitigate this error by temporarily rolling back to the previous runtime version. For more information, see https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html
-[ERROR] Runtime.ImportModuleError: Unable to import module 'lambda_function': No module named 'cryptography'
-Traceback (most recent call last):
-INIT_REPORT Init Duration: 332.48 ms	Phase: init	Status: error	Error Type: Runtime.ImportModuleError
-[WARNING]	2025-08-07T16:33:58.253Z		LAMBDA_WARNING: Unhandled exception. The most likely cause is an issue in the function code. However, in rare cases, a Lambda runtime update can cause unexpected function behavior. For functions using managed runtimes, runtime updates can be triggered by a function change, or can be applied automatically. To determine if the runtime has been updated, check the runtime version in the INIT_START log entry. If this error correlates with a change in the runtime version, you may be able to mitigate this error by temporarily rolling back to the previous runtime version. For more information, see https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html
-[ERROR] Runtime.ImportModuleError: Unable to import module 'lambda_function': No module named 'cryptography'
-Traceback (most recent call last):
-INIT_REPORT Init Duration: 234.60 ms	Phase: invoke	Status: error	Error Type: Runtime.ImportModuleError
-START RequestId: 6d10a6d0-ea32-49c8-ad70-19da42403a0a Version: $LATEST
-END RequestId: 6d10a6d0-ea32-49c8-ad70-19da42403a0a
-REPORT RequestId: 6d10a6d0-ea32-49c8-ad70-19da42403a0a	Duration: 246.51 ms	Billed Duration: 247 ms	Memory Size: 128 MB	Max Memory Used: 65 MB	Status: error	Error Type: Runtime.ImportModuleError
-
-Request ID
-6d10a6d0-ea32-49c8-ad70-19da42403a0a
