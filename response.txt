@@ -1,37 +1,16 @@
 Resources:
-  LambdaExecutionRole:
-    Type: AWS::IAM::Role
+  LambdaSSMPolicy:
+    Type: AWS::IAM::Policy
     Properties:
-      RoleName: my-lambda-execution-role
-      AssumeRolePolicyDocument:
+      PolicyName: allow-ssm-parameter-read
+      Roles:
+        - existing-lambda-role-name   # <-- Use the actual role name
+      PolicyDocument:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action: sts:AssumeRole
-      Policies:
-        - PolicyName: allow-ssm-parameter-read
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - ssm:GetParametersByPath
-                  - ssm:GetParameters
-                  - ssm:GetParameter
-                Resource: arn:aws:ssm:ap-south-1:YOUR_ACCOUNT_ID:parameter/certificate/*
-              - Effect: Allow
-                Action:
-                  - logs:CreateLogGroup
-                  - logs:CreateLogStream
-                  - logs:PutLogEvents
-                Resource: "*"
-
-# (Optional) Example Lambda definition using this role:
-  MyLambdaFunction:
-    Type: AWS::Lambda::Function
-    Properties:
-      Role: !GetAtt LambdaExecutionRole.Arn
-      # ... (other Lambda function properties, such as Code, Handler, Runtime, etc.) ...
-
+            Action:
+              - ssm:GetParametersByPath
+              - ssm:GetParameters
+              - ssm:GetParameter
+            Resource: arn:aws:ssm:ap-south-1:YOUR_ACCOUNT_ID:parameter/certificate/*
