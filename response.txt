@@ -1,0 +1,26 @@
+Test Event Name
+hello-world
+
+Response
+{
+  "errorMessage": "Unable to import module 'lambda_function': No module named 'cryptography'",
+  "errorType": "Runtime.ImportModuleError",
+  "requestId": "",
+  "stackTrace": []
+}
+
+Function Logs
+[WARNING]	2025-08-07T16:33:58.005Z		LAMBDA_WARNING: Unhandled exception. The most likely cause is an issue in the function code. However, in rare cases, a Lambda runtime update can cause unexpected function behavior. For functions using managed runtimes, runtime updates can be triggered by a function change, or can be applied automatically. To determine if the runtime has been updated, check the runtime version in the INIT_START log entry. If this error correlates with a change in the runtime version, you may be able to mitigate this error by temporarily rolling back to the previous runtime version. For more information, see https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html
+[ERROR] Runtime.ImportModuleError: Unable to import module 'lambda_function': No module named 'cryptography'
+Traceback (most recent call last):
+INIT_REPORT Init Duration: 332.48 ms	Phase: init	Status: error	Error Type: Runtime.ImportModuleError
+[WARNING]	2025-08-07T16:33:58.253Z		LAMBDA_WARNING: Unhandled exception. The most likely cause is an issue in the function code. However, in rare cases, a Lambda runtime update can cause unexpected function behavior. For functions using managed runtimes, runtime updates can be triggered by a function change, or can be applied automatically. To determine if the runtime has been updated, check the runtime version in the INIT_START log entry. If this error correlates with a change in the runtime version, you may be able to mitigate this error by temporarily rolling back to the previous runtime version. For more information, see https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html
+[ERROR] Runtime.ImportModuleError: Unable to import module 'lambda_function': No module named 'cryptography'
+Traceback (most recent call last):
+INIT_REPORT Init Duration: 234.60 ms	Phase: invoke	Status: error	Error Type: Runtime.ImportModuleError
+START RequestId: 6d10a6d0-ea32-49c8-ad70-19da42403a0a Version: $LATEST
+END RequestId: 6d10a6d0-ea32-49c8-ad70-19da42403a0a
+REPORT RequestId: 6d10a6d0-ea32-49c8-ad70-19da42403a0a	Duration: 246.51 ms	Billed Duration: 247 ms	Memory Size: 128 MB	Max Memory Used: 65 MB	Status: error	Error Type: Runtime.ImportModuleError
+
+Request ID
+6d10a6d0-ea32-49c8-ad70-19da42403a0a
